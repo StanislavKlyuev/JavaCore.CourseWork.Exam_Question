@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.JavaCore.CourseWork.Exam_Question.Exception.*;
 import org.skypro.JavaCore.CourseWork.Exam_Question.model.JavaQuestion;
@@ -34,9 +33,11 @@ public class ExaminerServiceImplTest {
     public void whenAmountMoreThenQuestions_ThenReturnMoreThenQuestionException() {       //Запрос количества вопросов больше размера репозитория
         Question question = new JavaQuestion("questionTest", "answerTest");
         Question question2 = new JavaQuestion("questionTest2", "answerTest2");
-        Mockito.lenient().when(javaQuestionService.getAll()).thenReturn(Collections.singletonList(question));
-        Mockito.lenient().when(mathQuestionService.getAll()).thenReturn(Collections.singletonList(question2));
+        when(javaQuestionService.getAll()).thenReturn(Collections.singletonList(question));
+        when(mathQuestionService.getAll()).thenReturn(Collections.singletonList(question2));
         assertThrows(MoreThenQuestionException.class, () -> examinerServiceImpl.getQuestions(3));
+        verify(javaQuestionService, times(1)).getAll();
+        verify(mathQuestionService, times(1)).getAll();
     }
 
     @Test

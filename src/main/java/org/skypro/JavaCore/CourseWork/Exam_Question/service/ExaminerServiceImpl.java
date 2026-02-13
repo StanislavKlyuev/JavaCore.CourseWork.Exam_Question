@@ -19,10 +19,10 @@ import java.util.Random;
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private final QuestionService javaQuestionService;
-    private final QuestionService mathQuestionService;
+    private final @Qualifier("Java") QuestionService javaQuestionService;
+    private final  QuestionService mathQuestionService;
 
-    public ExaminerServiceImpl(@Qualifier("Java") QuestionService javaQuestionService, @Qualifier("Math") QuestionService mathQuestionService) {
+    public ExaminerServiceImpl(JavaQuestionService javaQuestionService, MathQuestionService mathQuestionService) {
         this.javaQuestionService = javaQuestionService;
         this.mathQuestionService = mathQuestionService;
     }
